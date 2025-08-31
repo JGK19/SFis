@@ -3,7 +3,7 @@ from functions.fis_functions import force
 from functions.math_functions import distance
 
 class SolarSystem:
-    G = 6.67 * (10**(-11))
+    G = 6.674184 * (10**(-11))
 
     def __init__(self, K):
         self.K = K
