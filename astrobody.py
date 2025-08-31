@@ -9,7 +9,8 @@ class AstroBody:
         self.pos = np.array(init_p, dtype=float)
         self.vel = np.array(init_v, dtype=float)
         self.acc = np.array(init_a, dtype=float)
-        self.force = np.array([0, 0], dtype=float)
+        self.force = np.array((0, 0), dtype=float)
+
         self.radius = radius
         self.color = color
 
@@ -27,6 +28,7 @@ class AstroBody:
     def update(self, delta_t):
         self.pos += (self.vel * delta_t)
         self.vel += (self.acc * delta_t)
+        self.acc = (self.force / self.mass)
     
     def collision(self, other_body, delta_t):
         if (distance(self.pos, other_body.pos, self.norm_func) <= self.radius + other_body.radius):
@@ -37,5 +39,7 @@ class AstroBody:
         direction = direction / self.norm_func(direction)
         f = self.force_func(self, other_body, self.distance_func, self.norm_func)
         force_vec = direction * f
-        self.acc = force_vec / self.mass
+        self.force += force_vec
     
+    def reset_force(self):
+        self.force = np.array([0,0], dtype=float)

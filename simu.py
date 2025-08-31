@@ -34,6 +34,7 @@ class Simu:
     def update(self):
         for p in self.planets:
             p.update(self.delta_t)
+            p.reset_force()
             for b in self.planets:
                 if p is not b:
                     p.apply_gravity(b)
