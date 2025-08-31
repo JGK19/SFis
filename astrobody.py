@@ -4,7 +4,6 @@ from functions.fis_functions import force
 from functions.math_functions import norm, distance
 
 class AstroBody:
-    G = 1
     
     def __init__(self, init_p, radius, mass, color, init_v=(0,0), init_a=(0,0), distance_func=distance, norm_func=norm, force_func=force):
         self.pos = np.array(init_p, dtype=float)
@@ -25,9 +24,13 @@ class AstroBody:
         y = self.pos[1]
         pygame.draw.circle(screen, self.color, (x, y), self.radius)
     
-    def update(self):
-        self.pos += self.vel
-        self.vel += self.acc
+    def update(self, delta_t):
+        self.pos += (self.vel * delta_t)
+        self.vel += (self.acc * delta_t)
+    
+    def collision(self, other_body, delta_t):
+        if (distance(self.pos, other_body.pos, self.norm_func) <= self.radius + other_body.radius):
+            self.vel = 0
 
     def apply_gravity(self, other_body):
         direction = other_body.pos - self.pos
@@ -35,3 +38,4 @@ class AstroBody:
         f = self.force_func(self, other_body, self.distance_func, self.norm_func)
         force_vec = direction * f
         self.acc = force_vec / self.mass
+    

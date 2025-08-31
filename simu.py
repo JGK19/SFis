@@ -2,6 +2,7 @@ import pygame
 import sys
 from config import WIDTH, HEIGHT, FPS, TITLE, BG_COLOR
 from astrobody import AstroBody
+from solarSystem import SolarSystem
 
 class Simu:
     def __init__(self):
@@ -10,10 +11,14 @@ class Simu:
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
+        self.delta_t = 1 # self.clock.tick(FPS)/1000000000
         self.running = True
 
-        self.planets = [AstroBody((400, 400), 10, 1, (255, 0, 0), init_v=(-1,-1)), AstroBody((300, 400), 10, 1, (0, 255, 0)),
-                        AstroBody((350, 450), 10, 1, (0, 0, 255), init_v=(0, -1))]
+        sistema = SolarSystem(500000)
+        # self.planets = sistema.gen_planets()
+        self.planets = [AstroBody((450, 450), 10, 30, (255, 0, 0), init_v=(-1, -1)), 
+                        AstroBody((300, 450), 10, 1, (0, 255, 0)), 
+                        AstroBody((400, 450), 10, 1, (0, 0, 255), init_v=(0, -1.5))]
     def run(self):
         while self.running:
             self.events()
@@ -28,10 +33,11 @@ class Simu:
 
     def update(self):
         for p in self.planets:
-            p.update()
+            p.update(self.delta_t)
             for b in self.planets:
                 if p is not b:
                     p.apply_gravity(b)
+                    #p.collision(b, self.delta_t)
     def draw(self):
         self.screen.fill(BG_COLOR)
 
