@@ -13,8 +13,8 @@ class SolarSystem:
         planets = {
             "Sol": AstroBody((pos_sol, 100), 20, 1.98892 * (10**30), (255, 255, 0), force_func=self.force_func(self.G)),
             "Mercúrio": AstroBody((pos_sol + 57910000/K, 100), 20, (3.285/K) * (10**23), (100, 100, 100), force_func=self.force_func(self.G)),
-            "Vênus": AstroBody((pos_sol + 108200000/K, 100), 5, (3.285/K) * (10**23), (200, 150, 50), force_func=self.force_func(self.G)),
-            "Terra": AstroBody((pos_sol + 149600000/K, 100), 5, (5.972/K) * (10**24), (0, 150, 100), init_v=(0, 0), force_func=self.force_func(self.G)),
+            "Vênus": AstroBody((pos_sol + 108200000/K, 100), 20, (3.285/K) * (10**23), (200, 150, 50), force_func=self.force_func(self.G)),
+            "Terra": AstroBody((pos_sol + 149600000/K, 100), 20, (5.972/K) * (10**24), (0, 150, 100), init_v=(0, 0), force_func=self.force_func(self.G)),
             # "Marte": AstroBody((pos_sol + 227940000/K, 100), 5, (6.39/K) * (10**23), (255, 0, 0), force_func=self.force_func(self.G)),
             # "Júpiter": AstroBody((pos_sol + 778330000/K, 100), 5, (1.898/K) * (10**27), (100, 100, 60), force_func=self.force_func(self.G)),
             # "Saturno": AstroBody((pos_sol + 1429400000/K, 100), 5, (5.683/K) * (10**26), (150, 200, 100), force_func=self.force_func(self.G)),
