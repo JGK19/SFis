@@ -4,26 +4,34 @@ import math
 from functions.fis_functions import force
 from functions.math_functions import norm, distance
 
-def draw_direction_vector(screen, start_pos, vector, length=100, color=(255,0,0), width=3, arrow_size=10):
+def draw_vector(screen, start_pos, vector, min_length=50, max_length=200, min_mag=0, max_mag=2,
+                color=(255,0,0), width=3, arrow_size=10):
     dx, dy = vector
-    # Normaliza o vetor
     mag = math.hypot(dx, dy)
     if mag == 0:
-        return  # vetor nulo, nada a desenhar
+        return  # vetor nulo
+    
+    # regra de 3 para o comprimento do vetor
+    # length = min_length + (mag - min_mag) * (max_length - min_length) / (max_mag - min_mag)
+    # limitando entre min_length e max_length
+    length = min_length + (mag - min_mag) * (max_length - min_length) / max(1e-5, (max_mag - min_mag))
+    length = max(min_length, min(max_length, length))
+    
+    # normaliza vetor
     dx_norm = dx / mag
     dy_norm = dy / mag
     
-    # Calcula posição final baseada no tamanho fixo
+    # posição final
     end_pos = (start_pos[0] + dx_norm * length,
-               start_pos[1] + dy_norm * length)  # y cresce para baixo no pygame
+               start_pos[1] + dy_norm * length)
     
-    # Desenha linha principal
+    # linha principal
     pygame.draw.line(screen, color, start_pos, end_pos, width)
     
-    # Ângulo do vetor
+    # ângulo
     angle = math.atan2(start_pos[1] - end_pos[1], end_pos[0] - start_pos[0])
     
-    # Pontas da seta
+    # ponta da seta
     left = (end_pos[0] - arrow_size * math.cos(angle - math.pi/6),
             end_pos[1] + arrow_size * math.sin(angle - math.pi/6))
     right = (end_pos[0] - arrow_size * math.cos(angle + math.pi/6),
@@ -52,10 +60,10 @@ class AstroBody:
         x = self.pos[0]
         y = self.pos[1]
         pygame.draw.circle(screen, self.color, (x, y), self.radius)
-        draw_direction_vector(screen, (x, y), self.vel)
+        draw_vector(screen, (x, y), self.vel)
+        
     
     def update(self, delta_t):
-        print(self.color, self.pos, self.vel)
         self.pos += (self.vel * delta_t)
         self.vel += (self.acc * delta_t)
     
