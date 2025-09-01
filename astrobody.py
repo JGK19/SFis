@@ -60,7 +60,9 @@ class AstroBody:
         x = self.pos[0]
         y = self.pos[1]
         pygame.draw.circle(screen, self.color, (x, y), self.radius)
-        draw_vector(screen, (x, y), self.vel)
+        draw_vector(screen, (x, y), self.force, color=(255,0,0))
+        draw_vector(screen, (x, y), self.vel, color=(0,255,0))
+        draw_vector(screen, (x, y), self.acc, color=(255,255,0))
         
     
     def update(self, delta_t):
