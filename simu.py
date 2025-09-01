@@ -11,18 +11,18 @@ class Simu:
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.clock = pygame.time.Clock()
-        self.delta_t = 1 # self.clock.tick(FPS)/1000000000
+        self.delta_t = self.clock.tick(FPS)/1000000000
         self.running = True
 
         sistema = SolarSystem(500000)
-        # self.planets = sistema.gen_planets()
+        self.planets = sistema.gen_planets()
         # self.planets = [AstroBody((450, 450), 10, 30, (255, 0, 0), init_v=(-1, -1)), 
         #                 AstroBody((300, 450), 10, 1, (0, 255, 0)), 
         #                 AstroBody((400, 450), 10, 1, (0, 0, 255), init_v=(0, -1.5))]
         # self.planets = [AstroBody((450, 450), 10, 1, (255, 0, 0), init_v=(0, -0.5)), 
         #                 AstroBody((300, 450), 10, 83, (0, 255, 0))]
-        self.planets = [AstroBody((400, 400), 10, 1, (255, 0, 0), init_v=(1, 0)), 
-                         AstroBody((300, 400), 10, 83, (0, 255, 0))]
+        # self.planets = [AstroBody((400, 400), 10, 1, (255, 0, 0), init_v=(1, 0)), 
+        #                  AstroBody((300, 400), 10, 83, (0, 255, 0))]
     def run(self):
         while self.running:
             self.events()
