@@ -2,12 +2,11 @@ import pygame
 import numpy as np
 from functions.fis_functions import force
 from functions.math_functions import norm, distance
-import math
 
 def draw_vector(screen, start_pos, vector, min_length=50, max_length=200, min_mag=0, max_mag=2,
                 color=(255,0,0), width=3, arrow_size=10):
     dx, dy = vector
-    mag = math.hypot(dx, dy)
+    mag = np.hypot(dx, dy)
     if mag == 0:
         return 
     
@@ -25,12 +24,12 @@ def draw_vector(screen, start_pos, vector, min_length=50, max_length=200, min_ma
     
     pygame.draw.line(screen, color, start_pos, end_pos, width)
     
-    angle = math.atan2(start_pos[1] - end_pos[1], end_pos[0] - start_pos[0])
+    angle = np.atan2(start_pos[1] - end_pos[1], end_pos[0] - start_pos[0])
     
-    left = (end_pos[0] - arrow_size * math.cos(angle - math.pi/6),
-            end_pos[1] + arrow_size * math.sin(angle - math.pi/6))
-    right = (end_pos[0] - arrow_size * math.cos(angle + math.pi/6),
-             end_pos[1] + arrow_size * math.sin(angle + math.pi/6))
+    left = (end_pos[0] - arrow_size * np.cos(angle - np.pi/6),
+            end_pos[1] + arrow_size * np.sin(angle - np.pi/6))
+    right = (end_pos[0] - arrow_size * np.cos(angle + np.pi/6),
+             end_pos[1] + arrow_size * np.sin(angle + np.pi/6))
     
     pygame.draw.polygon(screen, color, [end_pos, left, right])
 
