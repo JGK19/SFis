@@ -1,7 +1,36 @@
 import pygame
 import numpy as np
+import math
 from functions.fis_functions import force
 from functions.math_functions import norm, distance
+
+def draw_direction_vector(screen, start_pos, vector, length=100, color=(255,0,0), width=3, arrow_size=10):
+    dx, dy = vector
+    # Normaliza o vetor
+    mag = math.hypot(dx, dy)
+    if mag == 0:
+        return  # vetor nulo, nada a desenhar
+    dx_norm = dx / mag
+    dy_norm = dy / mag
+    
+    # Calcula posição final baseada no tamanho fixo
+    end_pos = (start_pos[0] + dx_norm * length,
+               start_pos[1] + dy_norm * length)  # y cresce para baixo no pygame
+    
+    # Desenha linha principal
+    pygame.draw.line(screen, color, start_pos, end_pos, width)
+    
+    # Ângulo do vetor
+    angle = math.atan2(start_pos[1] - end_pos[1], end_pos[0] - start_pos[0])
+    
+    # Pontas da seta
+    left = (end_pos[0] - arrow_size * math.cos(angle - math.pi/6),
+            end_pos[1] + arrow_size * math.sin(angle - math.pi/6))
+    right = (end_pos[0] - arrow_size * math.cos(angle + math.pi/6),
+             end_pos[1] + arrow_size * math.sin(angle + math.pi/6))
+    
+    pygame.draw.polygon(screen, color, [end_pos, left, right])
+
 
 class AstroBody:
     
@@ -23,8 +52,10 @@ class AstroBody:
         x = self.pos[0]
         y = self.pos[1]
         pygame.draw.circle(screen, self.color, (x, y), self.radius)
+        draw_direction_vector(screen, (x, y), self.vel)
     
     def update(self, delta_t):
+        print(self.color, self.pos, self.vel)
         self.pos += (self.vel * delta_t)
         self.vel += (self.acc * delta_t)
     
