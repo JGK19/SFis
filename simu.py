@@ -16,9 +16,11 @@ class Simu:
 
         sistema = SolarSystem(500000)
         # self.planets = sistema.gen_planets()
-        self.planets = [AstroBody((450, 450), 10, 30, (255, 0, 0), init_v=(-1, -1)), 
-                        AstroBody((300, 450), 10, 1, (0, 255, 0)), 
-                        AstroBody((400, 450), 10, 1, (0, 0, 255), init_v=(0, -1.5))]
+        # self.planets = [AstroBody((450, 450), 10, 30, (255, 0, 0), init_v=(-1, -1)), 
+        #                 AstroBody((300, 450), 10, 1, (0, 255, 0)), 
+        #                 AstroBody((400, 450), 10, 1, (0, 0, 255), init_v=(0, -1.5))]
+        self.planets = [AstroBody((450, 450), 10, 1, (255, 0, 0), init_v=(0, -0.5)), 
+                        AstroBody((300, 450), 10, 83, (0, 255, 0))]
     def run(self):
         while self.running:
             self.events()
