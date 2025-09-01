@@ -15,7 +15,7 @@ def draw_direction_vector(screen, start_pos, vector, length=100, color=(255,0,0)
     
     # Calcula posição final baseada no tamanho fixo
     end_pos = (start_pos[0] + dx_norm * length,
-               start_pos[1] - dy_norm * length)  # y cresce para baixo no pygame
+               start_pos[1] + dy_norm * length)  # y cresce para baixo no pygame
     
     # Desenha linha principal
     pygame.draw.line(screen, color, start_pos, end_pos, width)
