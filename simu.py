@@ -38,7 +38,7 @@ class Simu:
             for b in self.planets:
                 if p is not b:
                     p.apply_gravity(b)
-                    #p.collision(b, self.delta_t)
+                    # p.collision(b, self.delta_t)
     def draw(self):
         self.screen.fill(BG_COLOR)
 

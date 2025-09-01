@@ -2,6 +2,34 @@ import pygame
 import numpy as np
 from functions.fis_functions import force
 from functions.math_functions import norm, distance
+import math
+
+def draw_direction_vector(screen, start_pos, vector, length=100, color=(255,0,0), width=3, arrow_size=10):
+    dx, dy = vector
+    # Normaliza o vetor
+    mag = math.hypot(dx, dy)
+    if mag == 0:
+        return  # vetor nulo, nada a desenhar
+    dx_norm = dx / mag
+    dy_norm = dy / mag
+    
+    # Calcula posição final baseada no tamanho fixo
+    end_pos = (start_pos[0] + dx_norm * length,
+               start_pos[1] - dy_norm * length)  # y cresce para baixo no pygame
+    
+    # Desenha linha principal
+    pygame.draw.line(screen, color, start_pos, end_pos, width)
+    
+    # Ângulo do vetor
+    angle = math.atan2(start_pos[1] - end_pos[1], end_pos[0] - start_pos[0])
+    
+    # Pontas da seta
+    left = (end_pos[0] - arrow_size * math.cos(angle - math.pi/6),
+            end_pos[1] + arrow_size * math.sin(angle - math.pi/6))
+    right = (end_pos[0] - arrow_size * math.cos(angle + math.pi/6),
+             end_pos[1] + arrow_size * math.sin(angle + math.pi/6))
+    
+    pygame.draw.polygon(screen, color, [end_pos, left, right])
 
 class AstroBody:
     
@@ -24,6 +52,8 @@ class AstroBody:
         x = self.pos[0]
         y = self.pos[1]
         pygame.draw.circle(screen, self.color, (x, y), self.radius)
+        # draw_direction_vector(screen, (x, y), self.force)
+        draw_direction_vector(screen, (x, y), self.vel, color=(0,255,0))
     
     def update(self, delta_t):
         self.pos += (self.vel * delta_t)
@@ -32,7 +62,7 @@ class AstroBody:
     
     def collision(self, other_body, delta_t):
         if (distance(self.pos, other_body.pos, self.norm_func) <= self.radius + other_body.radius):
-            self.vel = 0
+            self.vel = np.array([0,0], dtype=float)
 
     def apply_gravity(self, other_body):
         direction = other_body.pos - self.pos
