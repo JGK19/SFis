@@ -19,10 +19,27 @@ class Simu:
         # self.planets = [AstroBody((450, 450), 10, 30, (255, 0, 0), init_v=(-1, -1)), 
         #                 AstroBody((300, 450), 10, 1, (0, 255, 0)), 
         #                 AstroBody((400, 450), 10, 1, (0, 0, 255), init_v=(0, -1.5))]
-        # self.planets = [AstroBody((450, 450), 10, 1, (255, 0, 0), init_v=(0, -0.5)), 
+        # self.planets = [AstroBody((450, 450), 10, 10, (255, 0, 0), init_v=(0, -0.5)), 
         #                 AstroBody((300, 450), 10, 83, (0, 255, 0))]
-        self.planets = [AstroBody((400, 400), 10, 1, (255, 0, 0), init_v=(1, 0)), 
-                         AstroBody((300, 400), 10, 83, (0, 255, 0))]
+        # self.planets = [AstroBody((400, 400), 10, 1, (255, 0, 0), init_v=(1, 0)), 
+        #                  AstroBody((300, 400), 10, 83, (0, 255, 0))]
+        self.planets = [AstroBody((300, 300), 10, 10, (255, 0, 0), init_v=(0, 0)), 
+                        AstroBody((500, 500), 10, 10, (0, 255, 0)), 
+                        AstroBody((300, 700), 10, 10, (0, 0, 255),)]
+        # self.planets = [
+        #                 AstroBody((600, 400), 10, 100, (255, 0, 0), init_v=(0, 0)), 
+        #                 AstroBody((500, 400), 10, 15, (0, 255, 0), init_v=(0, 1)), 
+        #                 AstroBody((700, 400), 10, 15, (0, 0, 255), init_v=(0, -1)),
+        #                 #AstroBody((600, 300), 10, 10, (0, 255, 255), init_v=(-1, 0)),
+        #                 #AstroBody((600, 500), 10, 10, (255, 0, 255), init_v=(1, 0)),
+        #                 ]
+        # self.planets = [
+        #                 AstroBody((400, 400), 10, 250, (255, 0, 0), init_v=(0, -0.5)), 
+        #                 AstroBody((500, 400), 10, 80, (0, 255, 0), init_v=(0, 1)), 
+        #                 AstroBody((600, 400), 10, 1, (0, 0, 255), init_v=(0, 1)),
+        #                 AstroBody((300, 400), 10, 1, (0, 255, 255), init_v=(0.1, 0)),
+        #                 AstroBody((400, 500), 10, 1, (255, 0, 255), init_v=(0.5, 0)),
+        #                 ]
     def run(self):
         while self.running:
             self.events()
@@ -37,12 +54,12 @@ class Simu:
 
     def update(self):
         for p in self.planets:
-            p.update(self.delta_t)
             p.reset_force()
             for b in self.planets:
                 if p is not b:
                     p.apply_gravity(b)
                     p.collision(b, self.delta_t)
+            p.update(self.delta_t)
     def draw(self):
         self.screen.fill(BG_COLOR)
 

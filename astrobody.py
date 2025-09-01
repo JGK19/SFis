@@ -66,7 +66,18 @@ class AstroBody:
     
     def collision(self, other_body, delta_t):
         if (distance(self.pos, other_body.pos, self.norm_func) <= self.radius + other_body.radius):
-            self.vel = np.array([0,0], dtype=float)
+            dp = other_body.pos - self.pos
+            dp = dp/norm(dp)
+            theta = np.atan2(dp[0], dp[1])
+
+            dist = lambda x, y, z:  (self.radius + other_body.radius)
+
+            collision_mag = self.force_func(self, other_body, dist, self.norm_func)
+            #collision_mag = norm(self.force * np.cos(theta))
+
+            collision_vec = (-1*dp) * collision_mag
+
+            self.force = collision_vec
 
     def apply_gravity(self, other_body):
         direction = other_body.pos - self.pos
