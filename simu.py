@@ -19,8 +19,10 @@ class Simu:
         # self.planets = [AstroBody((450, 450), 10, 30, (255, 0, 0), init_v=(-1, -1)), 
         #                 AstroBody((300, 450), 10, 1, (0, 255, 0)), 
         #                 AstroBody((400, 450), 10, 1, (0, 0, 255), init_v=(0, -1.5))]
-        self.planets = [AstroBody((450, 450), 10, 1, (255, 0, 0), init_v=(0, -0.5)), 
-                        AstroBody((300, 450), 10, 83, (0, 255, 0))]
+        # self.planets = [AstroBody((450, 450), 10, 1, (255, 0, 0), init_v=(0, -0.5)), 
+        #                 AstroBody((300, 450), 10, 83, (0, 255, 0))]
+        self.planets = [AstroBody((400, 400), 10, 1, (255, 0, 0), init_v=(1, 0)), 
+                         AstroBody((300, 400), 10, 83, (0, 255, 0))]
     def run(self):
         while self.running:
             self.events()
@@ -40,7 +42,7 @@ class Simu:
             for b in self.planets:
                 if p is not b:
                     p.apply_gravity(b)
-                    # p.collision(b, self.delta_t)
+                    p.collision(b, self.delta_t)
     def draw(self):
         self.screen.fill(BG_COLOR)
 

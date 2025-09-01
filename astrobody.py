@@ -9,7 +9,7 @@ def draw_vector(screen, start_pos, vector, min_length=50, max_length=200, min_ma
     dx, dy = vector
     mag = math.hypot(dx, dy)
     if mag == 0:
-        return  # vetor nulo
+        return 
     
     # regra de 3 para o comprimento do vetor
     # length = min_length + (mag - min_mag) * (max_length - min_length) / (max_mag - min_mag)
@@ -17,21 +17,16 @@ def draw_vector(screen, start_pos, vector, min_length=50, max_length=200, min_ma
     length = min_length + (mag - min_mag) * (max_length - min_length) / max(1e-5, (max_mag - min_mag))
     length = max(min_length, min(max_length, length))
     
-    # normaliza vetor
     dx_norm = dx / mag
     dy_norm = dy / mag
     
-    # posição final
     end_pos = (start_pos[0] + dx_norm * length,
                start_pos[1] + dy_norm * length)
     
-    # linha principal
     pygame.draw.line(screen, color, start_pos, end_pos, width)
     
-    # ângulo
     angle = math.atan2(start_pos[1] - end_pos[1], end_pos[0] - start_pos[0])
     
-    # ponta da seta
     left = (end_pos[0] - arrow_size * math.cos(angle - math.pi/6),
             end_pos[1] + arrow_size * math.sin(angle - math.pi/6))
     right = (end_pos[0] - arrow_size * math.cos(angle + math.pi/6),
